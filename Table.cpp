@@ -1,32 +1,19 @@
 #include "Table.h"
-#include <iostream>
 
-Table::Table(int tableNumber) : tableNumber(tableNumber), occupied(false) {}
+// Constructor
+Table::Table(int id) : tableId(id), isOccupied(false) {}
 
-void Table::occupyTable(const Customer& customer) {
-    currentCustomer = customer;
-    occupied = true;
+// Getter for isOccupied
+bool Table::getIsOccupied() const {
+    return isOccupied;
 }
 
-void Table::displayOrders() const {
-    if (occupied) {
-        std::cout << "Orders for " << currentCustomer.getName() << " at Table " << tableNumber << ":\n";
-        for (const auto& order : orders) {
-            std::cout << " - " << order.first << ": " << order.second << "\n";
-        }
-    } else {
-        std::cout << "Table " << tableNumber << " is not occupied.\n";
-    }
+// Setter for isOccupied
+void Table::setIsOccupied(bool occupied) {
+    isOccupied = occupied;
 }
 
-void Table::updateOrderStatus(const std::string& order, const std::string& status) {
-    for (auto& o : orders) {
-        if (o.first == order) {
-            o.second = status;
-        }
-    }
-}
-
-Customer Table::getCurrentCustomer() const {
-    return currentCustomer;
+// Getter for tableId
+int Table::getTableId() const {
+    return tableId;
 }
