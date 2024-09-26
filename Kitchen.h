@@ -7,12 +7,11 @@
 
 class Kitchen {
 private:
-    std::queue<Order*> orderQueue; // Queue to manage orders being processed
-    int nextOrderId = 1;           // Auto-incrementing order ID
+    std::queue<Order*> orderQueue;
 
 public:
     // Add an order to the kitchen queue
-    void takeOrder(int tableId, const std::string& item);
+    void takeOrder(Order* order);
 
     // Simulate cooking and prompt delivery
     void cookOrder();

@@ -2,37 +2,24 @@
 #define CUSTOMER_H
 
 #include "Order.h"
-#include <string>
+#include <iostream>
 
 class Customer {
 private:
-    int customerId;      // Unique ID for each customer
-    bool hasOrdered;     // True if the customer has placed an order
-    int tableId;         // Table assigned to this customer
-    Order* order;        // Pointer to an Order object
+    int customerId;
+    int tableId;
+    Order* order;
 
 public:
-    // Constructor
-    Customer(int id, int table);
+    Customer(int id, int tableId);
 
-    // Destructor to clean up the order object
-    ~Customer();
-
-    // Getter and Setter for hasOrdered
-    bool getHasOrdered() const;
-    void setHasOrdered(bool ordered);
-
-    // Getter for customerId
     int getCustomerId() const;
-
-    // Getter and Setter for tableId
     int getTableId() const;
-    void setTableId(int table);
+    void setTableId(int tableId);
 
-    // Customer places an order
+    // Customer places an order (no notification, Game Manager handles it)
     void placeOrder(int orderId, const std::string& item);
 
-    // Display customer's order details
     void displayOrder() const;
 };
 
