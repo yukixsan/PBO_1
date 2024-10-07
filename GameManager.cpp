@@ -1,12 +1,10 @@
 #include "GameManager.h"
 #include <iostream>
 
-// Constructor initializes the kitchen
-GameManager::GameManager(Kitchen* kitchen, Table* table1, Table* table2) 
+
+// Constructor initializes the kitchen and tables
+GameManager::GameManager(Kitchen* kitchen, Table* table1, Table* table2, Dishwasher* dishwasher) 
     : kitchen(kitchen), table1(table1), table2(table2) {}
-
-// The rest of your GameManager implementation remains unchanged
-
 
 // Add a customer to the queue
 void GameManager::addCustomerToQueue(Customer* customer) {
@@ -16,6 +14,7 @@ void GameManager::addCustomerToQueue(Customer* customer) {
         std::cout << "Customer queue is full (max 3 customers).\n";
     }
 }
+
 // Check if customer queue is empty
 bool GameManager::isCustomerQueueEmpty() const {
     return customerQueue.empty();
@@ -28,9 +27,11 @@ void GameManager::assignCustomerToTable(Table* table) {
         customerQueue.pop();                         // Remove the customer from the queue
         customer->setTableId(table->getTableId());
         table->setIsOccupied(true);
+
         std::cout << "Customer " << customer->getCustomerId() 
                   << " has been assigned to table " << table->getTableId() << std::endl;
-        orderPlaced(customer);                       // Automatically place an order for the customer
+        // Automatically place an order for the customer
+        orderPlaced(customer);                       
     } else {
         if (table->getIsOccupied()) {
             std::cout << "Table " << table->getTableId() << " is already occupied." << std::endl;
@@ -43,8 +44,9 @@ void GameManager::assignCustomerToTable(Table* table) {
 // Notify the kitchen when a customer places an order
 void GameManager::orderPlaced(Customer* customer) {
     std::string orderItem = "Food";  // Automatically assign the order to "Food"
-    customer->placeOrder(1, orderItem);  // Create the order
-    kitchen->takeOrder(new Order(1, customer->getTableId(), orderItem));  // Notify kitchen
+    // Create the order with the orderId matching tableId
+    customer->placeOrder(customer->getTableId(), orderItem);  
+    kitchen->takeOrder(new Order(customer->getTableId(), customer->getTableId(), orderItem));  
 
     std::cout << "Order for " << orderItem << " placed for table " 
               << customer->getTableId() << "." << std::endl;
@@ -53,7 +55,7 @@ void GameManager::orderPlaced(Customer* customer) {
 // Process orders in the kitchen (cooking all pending orders)
 void GameManager::processOrders() {
     while (kitchen->hasPendingOrders()) {
-        kitchen->cookOrder();
+        kitchen->cookOrder();  // Cook one order at a time
     }
 }
 
@@ -65,9 +67,22 @@ void GameManager::deliverOrder(int tableId) {
 
     if (deliveryTable == tableId) {
         std::cout << "Order successfully delivered to table " << tableId << "." << std::endl;
-        freeTable(tableId); // Free the table after delivering the order
     } else {
         std::cout << "Wrong table! The order was not delivered." << std::endl;
+    }
+}
+void GameManager::takeDirtyPlate() 
+{
+    if (table1->getIsOccupied() && table1->getIsOccupied()) {
+        std::cout << "Taking dirty plate from table " << table1->getTableId() << " to the dishwasher..." << std::endl;
+        dishwasher->washPlate();
+        freeTable(table1->getTableId()); // Free the table after washing
+    } else if (table2->getIsOccupied()) {
+        std::cout << "Taking dirty plate from table " << table2->getTableId() << " to the dishwasher..." << std::endl;
+        dishwasher->washPlate();
+        freeTable(table2->getTableId()); // Free the table after washing
+    } else {
+        std::cout << "No completed orders to wash." << std::endl;
     }
 }
 void GameManager::freeTable(int tableId) {
@@ -80,4 +95,7 @@ void GameManager::freeTable(int tableId) {
     } else {
         std::cout << "Invalid table ID." << std::endl;
     }
+}
+void GameManager::displayQueueSize() const {
+    std::cout << "Customers in queue: " << customerQueue.size() << std::endl;
 }

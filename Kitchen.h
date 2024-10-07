@@ -1,22 +1,21 @@
 #ifndef KITCHEN_H
 #define KITCHEN_H
 
-#include "Order.h"
 #include <queue>
-#include <iostream>
+#include "Order.h"
 
 class Kitchen {
 private:
-    std::queue<Order*> orderQueue;
+    std::queue<Order*> orderQueue; // Queue to hold the orders
 
 public:
-    // Add an order to the kitchen queue
+    // Add an order to the kitchen
     void takeOrder(Order* order);
 
-    // Simulate cooking and prompt delivery
+    // Simulate cooking the first order in the queue
     void cookOrder();
 
-    // Check if there are any pending orders
+    // Check if there are pending orders
     bool hasPendingOrders() const;
 };
 
