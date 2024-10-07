@@ -4,7 +4,7 @@
 
 // Constructor initializes the kitchen and tables
 GameManager::GameManager(Kitchen* kitchen, Table* table1, Table* table2, Dishwasher* dishwasher) 
-    : kitchen(kitchen), table1(table1), table2(table2) {}
+    : kitchen(kitchen), table1(table1), table2(table2), dishwasher(dishwasher), lastOrderId(0) {}
 
 // Add a customer to the queue
 void GameManager::addCustomerToQueue(Customer* customer) {
@@ -40,13 +40,16 @@ void GameManager::assignCustomerToTable(Table* table) {
         }
     }
 }
-
+int GameManager::getNextOrderId() {
+    return ++lastOrderId; // Increment and return the next order ID
+}
 // Notify the kitchen when a customer places an order
 void GameManager::orderPlaced(Customer* customer) {
     std::string orderItem = "Food";  // Automatically assign the order to "Food"
     // Create the order with the orderId matching tableId
-    customer->placeOrder(customer->getTableId(), orderItem);  
-    kitchen->takeOrder(new Order(customer->getTableId(), customer->getTableId(), orderItem));  
+     int orderId = getNextOrderId(); // Get the next order ID
+    customer->placeOrder(orderId, orderItem);  
+    kitchen->takeOrder(new Order(orderId, customer->getTableId(), orderItem));  
 
     std::cout << "Order for " << orderItem << " placed for table " 
               << customer->getTableId() << "." << std::endl;
