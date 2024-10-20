@@ -1,0 +1,1 @@
+g++ main.cpp Table.cpp Customer.cpp CustomerA.cpp CustomerB.cpp  Order.cpp Kitchen.cpp DishWasher.cpp GameManager.cpp -o diner_dash

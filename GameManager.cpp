@@ -1,15 +1,30 @@
 #include "GameManager.h"
+#include "CustomerA.h"
+#include "CustomerB.h"
 #include <iostream>
-
+#include <cstdlib>
 
 // Constructor initializes the kitchen and tables
 GameManager::GameManager(Kitchen* kitchen, Table* table1, Table* table2, Dishwasher* dishwasher) 
     : kitchen(kitchen), table1(table1), table2(table2), dishwasher(dishwasher), lastOrderId(0) {}
 
 // Add a customer to the queue
-void GameManager::addCustomerToQueue(Customer* customer) {
+void GameManager::addCustomerToQueue() {
+    
+    int randomCustomerType = rand() % 2;  // 0 or 1
+    int customerId = nextCustomerId++;  // Incremental customer ID
+    Customer* newCustomer;
+      if (randomCustomerType == 0) {
+        newCustomer = new CustomerA(customerId,-1);
+        std::cout << "Generated CustomerA with ID " << customerId << std::endl;
+    } else {
+        newCustomer = new CustomerB(customerId,-1);
+        std::cout << "Generated CustomerB with ID " << customerId << std::endl;
+    }
+
     if (customerQueue.size() < 3) { // Limit to 3 customers
-        customerQueue.push(customer);
+        customerQueue.push(newCustomer);
+         std::cout << "Customer added to the queue. Current queue size: " << customerQueue.size() << std::endl;
     } else {
         std::cout << "Customer queue is full (max 3 customers).\n";
     }

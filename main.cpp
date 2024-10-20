@@ -1,7 +1,10 @@
 #include <iostream>
 #include "GameManager.h"
 #include "Table.h"
-#include "Customer.h"
+#include <cstdlib>    // For rand() and srand()
+#include <ctime>      // For time()
+#include "CustomerA.h"
+#include "CustomerB.h"
 #include "Kitchen.h"
 
 int main() {
@@ -13,19 +16,11 @@ int main() {
 
     // Create GameManager and pass kitchen and tables
     GameManager gameManager(&kitchen, &table1, &table2, &dishwasher);
-
-    // Initialize 3 customers
-    Customer customer1(101, -1);
-    Customer customer2(102, -1);
-    Customer customer3(103, -1);
-
-    // Add customers to the queue
-    gameManager.addCustomerToQueue(&customer1);
-    gameManager.addCustomerToQueue(&customer2);
-    gameManager.addCustomerToQueue(&customer3);
+   
 
     int choice;
     do {
+         gameManager.addCustomerToQueue();
         std::cout << "===== Diner Dash Menu =====\n";
         std::cout << "1. Assign customer to table\n";
         std::cout << "2. Take order from table\n";

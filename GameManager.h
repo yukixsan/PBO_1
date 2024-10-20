@@ -5,6 +5,8 @@
 #include "Kitchen.h"
 #include "Table.h"
 #include "Customer.h"
+#include "CustomerA.h"
+#include "CustomerB.h"
 #include "DishWasher.h"
 
 class GameManager {
@@ -15,11 +17,12 @@ private:
     Dishwasher* dishwasher;
     std::queue<Customer*> customerQueue;
     int lastOrderId;
+    int nextCustomerId = 101;
 public:
     GameManager(Kitchen* kitchen, Table* table1, Table* table2,Dishwasher* dishwasher);
 
     // Add a customer to the queue
-    void addCustomerToQueue(Customer* customer);
+    void addCustomerToQueue();
 
     // Check if customer queue is empty
     bool isCustomerQueueEmpty() const;

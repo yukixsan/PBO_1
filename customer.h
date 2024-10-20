@@ -5,7 +5,7 @@
 #include <iostream>
 
 class Customer {
-private:
+protected:
     int customerId;
     int tableId;
     Order* order;
@@ -20,7 +20,8 @@ public:
     // Customer places an order (no notification, Game Manager handles it)
     void placeOrder(int orderId, const std::string& item);
 
-    void displayOrder() const;
+    virtual void displayOrder() const;
+    virtual void emotion() const = 0;
 };
 
 #endif
