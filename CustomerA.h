@@ -6,8 +6,8 @@
 class CustomerA : public Customer {
 public:
 
-    CustomerA(int id, int tableId);
-    void emotion() const override;
+    CustomerA(int id, int tableId, int emotion);
+    void Emotion() const override;
 };
 
 #endif

@@ -15,10 +15,10 @@ void GameManager::addCustomerToQueue() {
     int customerId = nextCustomerId++;  // Incremental customer ID
     Customer* newCustomer;
       if (randomCustomerType == 0) {
-        newCustomer = new CustomerA(customerId,-1);
+        newCustomer = new CustomerA(customerId,-1,50);
         std::cout << "Generated CustomerA with ID " << customerId << std::endl;
     } else {
-        newCustomer = new CustomerB(customerId,-1);
+        newCustomer = new CustomerB(customerId,-1,50);
         std::cout << "Generated CustomerB with ID " << customerId << std::endl;
     }
 
@@ -42,6 +42,8 @@ void GameManager::assignCustomerToTable(Table* table) {
         customerQueue.pop();                         // Remove the customer from the queue
         customer->setTableId(table->getTableId());
         table->setIsOccupied(true);
+
+        tableCustomers[table->getTableId()] = customer;
 
         std::cout << "Customer " << customer->getCustomerId() 
                   << " has been assigned to table " << table->getTableId() << std::endl;
@@ -82,11 +84,22 @@ void GameManager::deliverOrder(int tableId) {
     int deliveryTable;
     std::cout << "Enter table number to deliver the order: ";
     std::cin >> deliveryTable;
-
+    
+    Customer* customer = tableCustomers[tableId];
+    customer->getTableId();
     if (deliveryTable == tableId) {
         std::cout << "Order successfully delivered to table " << tableId << "." << std::endl;
-    } else {
+    } 
+    else 
+    {
+        customer->decreaseEmotion(50);
         std::cout << "Wrong table! The order was not delivered." << std::endl;
+        
+            if (customer->getEmotion() <= 0) 
+            { // Check if emotion has reached zero
+            customer->Emotion();
+            freeTable(tableId);
+            } // Free the table
     }
 }
 void GameManager::takeDirtyPlate() 
@@ -113,6 +126,8 @@ void GameManager::freeTable(int tableId) {
     } else {
         std::cout << "Invalid table ID." << std::endl;
     }
+        tableCustomers.erase(tableId);
+
 }
 void GameManager::displayQueueSize() const {
     std::cout << "Customers in queue: " << customerQueue.size() << std::endl;

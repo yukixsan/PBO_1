@@ -1,6 +1,6 @@
 #include "Customer.h"
 
-Customer::Customer(int id, int tableId) : customerId(id), tableId(tableId), order(nullptr) {}
+Customer::Customer(int id, int tableId, int emotion) : customerId(id), tableId(tableId),order(nullptr) {}
 
 int Customer::getCustomerId() const { return customerId; }
 
@@ -20,4 +20,9 @@ void Customer::displayOrder() const {
     } else {
         std::cout << "No order placed." << std::endl;
     }
+}
+void Customer::decreaseEmotion(int amount)
+{
+    emotion -= amount;
+    
 }

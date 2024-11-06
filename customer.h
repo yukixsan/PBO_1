@@ -9,9 +9,10 @@ protected:
     int customerId;
     int tableId;
     Order* order;
+    int emotion;
 
 public:
-    Customer(int id, int tableId);
+    Customer(int id, int tableId, int emotion = 50) ;
 
     int getCustomerId() const;
     int getTableId() const;
@@ -21,7 +22,9 @@ public:
     void placeOrder(int orderId, const std::string& item);
 
     virtual void displayOrder() const;
-    virtual void emotion() const = 0;
+    virtual void Emotion() const = 0;
+    int getEmotion() const {return emotion;}
+    void decreaseEmotion(int amount);
 };
 
 #endif

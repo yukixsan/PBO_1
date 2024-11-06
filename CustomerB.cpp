@@ -1,8 +1,8 @@
 #include "CustomerB.h"
 #include <iostream>
 
-CustomerB::CustomerB(int id, int tableId) : Customer(id, tableId) {}
+CustomerB::CustomerB(int id, int tableId, int emotion) : Customer(id, tableId) {}
 
-void CustomerB::emotion() const {
+void CustomerB::Emotion() const  {
     std::cout << "Customer " << customerId << " is leaving." << std::endl;
 }

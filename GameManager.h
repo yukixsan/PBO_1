@@ -8,8 +8,10 @@
 #include "CustomerA.h"
 #include "CustomerB.h"
 #include "DishWasher.h"
+#include <unordered_map>
 
 class GameManager {
+    std::unordered_map<int, Customer*> tableCustomers;
 private:
     Kitchen* kitchen;
     Table* table1;
