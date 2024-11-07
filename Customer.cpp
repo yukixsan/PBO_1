@@ -24,5 +24,7 @@ void Customer::displayOrder() const {
 void Customer::decreaseEmotion(int amount)
 {
     emotion -= amount;
+    if (emotion < 0) emotion = 0;  // Ensures it doesn't go below zero
+
     
 }

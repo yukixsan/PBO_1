@@ -56,8 +56,7 @@ void GameManager::assignCustomerToTable(Table* table) {
             std::cout << "No customers in the queue." << std::endl;
         }
     }
-}
-int GameManager::getNextOrderId() {
+}int GameManager::getNextOrderId() {
     return ++lastOrderId; // Increment and return the next order ID
 }
 // Notify the kitchen when a customer places an order
@@ -93,13 +92,12 @@ void GameManager::deliverOrder(int tableId) {
     else 
     {
         customer->decreaseEmotion(50);
-        std::cout << "Wrong table! The order was not delivered." << std::endl;
-        
-            if (customer->getEmotion() <= 0) 
-            { // Check if emotion has reached zero
+        //std::cout << "Wrong table! The order was not delivered." << std::endl;
+        if (customer->getEmotion() <= 0) 
+        { // Check if emotion has reached zero
             customer->Emotion();
             freeTable(tableId);
-            } // Free the table
+        } // Free the table
     }
 }
 void GameManager::takeDirtyPlate() 
